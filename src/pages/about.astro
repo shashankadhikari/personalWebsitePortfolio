@@ -3,18 +3,22 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Home Page">
-  <div class="h-screen flex flex-col items-center justify-center">
+  <div class="h-screen flex flex-col items-center justify-center gap-0">
     <div
-      class="border border-custom-button rounded-3xl px-3 py-1 text-custom-text"
+      class="border border-custom-button text-sm md:text-base rounded-3xl px-3 py-1 text-custom-text"
     >
       Shashank Adhikari
     </div>
     <div class="md:text-15xl text-8xl font-light leading-none mb-4">
       Persona
     </div>
-    <div class="text-3xl font-extralight mb-4">( Frontned Developer )</div>
-    <div class="uppercase font-light text-xs mb-12">Butwal, Nepal</div>
-    <div class="text-center w-2/3 font-normal mb-8">
+    <div class="text-xl md:text-3xl font-extralight mb-1 md:mb-4">
+      ( Frontend Developer )
+    </div>
+    <div class="uppercase font-light text-xs mb-6 md:mb-12">Butwal, Nepal</div>
+    <div
+      class="text-center w-4/5 md:w-2/3 font-normal text-sm md:text-base mb-8"
+    >
       Meet Shashank Adhikari, a creative Frontend Developer from the vibrant
       country of Nepal. With a keen eye for design and a deep understanding of
       technologies, Shashank brings ideas to life with his magic touch, infusing
@@ -25,15 +29,23 @@ import Layout from "../layouts/Layout.astro";
       possible and make a meaningful impact in the industry.
     </div>
     <div class="flex gap-3 text-white">
-      <ion-icon
-        class="bg-custom-button p-2 text-lg rounded-full"
-        name="logo-instagram"></ion-icon>
-      <ion-icon
-        class="bg-custom-button p-2 text-lg rounded-full"
-        name="logo-linkedin"></ion-icon>
-      <ion-icon
-        class="bg-custom-button p-2 text-lg rounded-full"
-        name="logo-facebook"></ion-icon>
+      <a href="https://www.instagram.com/estoy_shashank/" target="_blank">
+        <ion-icon
+          class="bg-custom-button p-2 text-lg rounded-full"
+          name="logo-instagram"></ion-icon>
+      </a>
+      <a
+        href="https://www.linkedin.com/in/shashank-adhikari-aa28931b5/"
+        target="_blank"
+        ><ion-icon
+          class="bg-custom-button p-2 text-lg rounded-full"
+          name="logo-linkedin"></ion-icon></a
+      >
+      <a href="https://www.facebook.com/shashankwiths/" target="_blank">
+        <ion-icon
+          class="bg-custom-button p-2 text-lg rounded-full"
+          name="logo-facebook"></ion-icon>
+      </a>
     </div>
   </div>
 </Layout>
