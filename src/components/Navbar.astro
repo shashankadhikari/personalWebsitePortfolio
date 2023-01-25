@@ -1,0 +1,93 @@
+---
+const logo = "Shashank";
+---
+
+<nav class="bg-custom-bg fixed top-0 left-0 right-0 shadow-none py-3 px-8 z-50">
+  <div class="mx-auto flex justify-between items-center">
+    <div class="flex items-center">
+      <a href="/" class="text-2xl text-custom-text font-normal">{logo}</a>
+    </div>
+    <div
+      class="nav-links duration-1000 md:static absolute md:min-h-fit min-h-[30vh] left-0 top-[-500%] md:w-auto w-full flex items-center px-5"
+    >
+      <div class="flex flex-col md:flex-row md:items-center gap-4">
+        <a
+          href="/"
+          class="px-3 py-2 rounded-md text-lg font-normal leading-5 text-custom-text hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+          >Home</a
+        >
+        <a
+          href="/about"
+          class="px-3 py-2 rounded-md text-lg font-small leading-5 text-custom-text hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+          >About Me</a
+        >
+        <a
+          href="/work"
+          class="px-3 py-2 rounded-md text-lg font-small leading-5 text-custom-text hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+          >Work</a
+        >
+      </div>
+    </div>
+    <div class="flex items-center gap-6">
+      <a href="#" class="px-3 rounded-md font-normal leading-5 text-custom-bg"
+        ><ion-icon
+          class="bg-custom-button p-2 text-lg rounded-full mail-icon"
+          name="mail-outline"
+          onclick="copyToClipboard('shashank.adhikari4152@gmail.com', this)"
+        ></ion-icon>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script is:inline>
+  const navLinks = document.querySelector(".nav-links");
+  function onToggleMenu(e) {
+    e.name = e.name === "menu-outline" ? "close" : "menu-outline";
+    if (navLinks.classList.contains("top-[90%]")) {
+      navLinks.classList.remove("top-[90%]");
+      navLinks.classList.add("top-[-500%]");
+    } else if (navLinks.classList.contains("top-[-500%]")) {
+      navLinks.classList.remove("top-[-500%]");
+      navLinks.classList.add("top-[90%]");
+    }
+  }
+
+  async function copyToClipboard(text, icon) {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("Email copied to clipboard");
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  }
+</script>
+
+<style>
+  .mail-icon::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: red;
+    text-align: center;
+  }
+  .mail-icon::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: red;
+    text-align: center;
+    visibility: hidden;
+    display: block;
+  }
+  .mail-icon:active::before,
+  .mail-icon:focus::before {
+    visibility: visible;
+  }
+</style>
