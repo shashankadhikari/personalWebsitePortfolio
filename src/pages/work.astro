@@ -1,9 +1,10 @@
 ---
+import { Image } from "@astrojs/image/components";
 import Layout from "../layouts/Layout.astro";
-import GSATHOME from "/Portfolio/gsAtHome.png";
-import WAYMANDU from "/Portfolio/Waymandu.png";
-import BurgerHouse from "/Portfolio/BurgerHouse.png";
-import DrStory from "/Portfolio/DrStory.png";
+import GSATHOME from "../images/Portfolio/gsAtHome.png";
+import WAYMANDU from "../images/Portfolio/Waymandu.png";
+import BurgerHouse from "../images/Portfolio/BurgerHouse.png";
+import DrStory from "../images/Portfolio/DrStory.png";
 ---
 
 <Layout title="Home Page">
@@ -46,14 +47,22 @@ import DrStory from "/Portfolio/DrStory.png";
           <div
             class="rounded-lg border-2 border-custom-accent bg-gs-athome drop-shadow-10xl"
           >
-            <img class="rounded-lg object-cover" src={GSATHOME} alt="" />
+            <Image
+              class="rounded-lg object-cover"
+              src={GSATHOME}
+              alt="GS-AtHome"
+            />
           </div>
         </div>
         <div class="md:col-start-3 md:col-end-4">
           <div
             class="rounded-lg border-2 border-custom-accent bg-gs-athome drop-shadow-10xl"
           >
-            <img class="rounded-lg object-cover" src={WAYMANDU} alt="" />
+            <Image
+              class="rounded-lg object-cover"
+              src={WAYMANDU}
+              alt="Waymandu"
+            />
           </div>
         </div>
       </div>
@@ -62,7 +71,11 @@ import DrStory from "/Portfolio/DrStory.png";
           <div
             class="rounded-lg border-2 border-custom-accent bg-gs-athome drop-shadow-10xl"
           >
-            <img class="rounded-lg object-cover" src={DrStory} alt="" />
+            <Image
+              class="rounded-lg object-cover"
+              src={DrStory}
+              alt="DrStory"
+            />
           </div>
         </div>
       </div>
@@ -71,7 +84,11 @@ import DrStory from "/Portfolio/DrStory.png";
           <div
             class="rounded-lg border-2 border-custom-accent bg-gs-athome drop-shadow-10xl"
           >
-            <img class="rounded-lg object-cover" src={BurgerHouse} alt="" />
+            <Image
+              class="rounded-lg object-cover"
+              src={BurgerHouse}
+              alt="BurgerHouse"
+            />
           </div>
         </div>
       </div>
