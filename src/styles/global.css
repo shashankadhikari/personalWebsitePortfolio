@@ -67,6 +67,7 @@ section{padding:clamp(72px,9vw,140px) var(--gutter)}
 .h-xl{font-size:clamp(64px,11vw,176px);line-height:.96}
 .about{background:var(--cream)}
 .about h2 span{color:var(--orange)}
+.about-grid{display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
 .about-body{display:flex;flex-wrap:wrap;gap:clamp(32px,5vw,80px)}
 .about-body > p{flex:1 1 420px;font-size:clamp(19px,1.6vw,24px);line-height:1.55;color:var(--ink);max-width:640px}
 .tiles{flex:1 1 420px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -137,6 +138,22 @@ footer a{color:var(--lime)}
 @keyframes rise{from{opacity:0;transform:translateY(60px)}}
 @keyframes fade{from{opacity:0}}
 @keyframes pop{from{opacity:0;transform:translateX(-50%) rotate(-4deg) scale(.6)}}
+@media (min-width:641px) and (max-width:899px){
+  /* heading beside the text, tiles in a full row underneath */
+  .about-grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px 32px;align-items:end}
+  .about-body{display:contents}
+  .about h2.h-xl{font-size:14vw}
+  .about-body > p{font-size:17px;max-width:none}
+  .tiles{grid-column:1/-1}
+}
+@media (min-width:900px){
+  /* text and tiles fill the column beside the heading, matching its height */
+  .about-grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(40px,5vw,80px)}
+  .about-body{flex-direction:column;flex-wrap:nowrap;justify-content:space-between;gap:clamp(24px,2.5vw,40px)}
+  .about-body > p{flex:none;max-width:none;font-size:clamp(17px,1.6vw,24px)}
+  .tiles{flex:1 1 auto}
+  .tile{min-height:clamp(130px,13vw,200px)}
+}
 @media (max-width:760px){
   .projects{grid-template-columns:minmax(0,1fr)}
 }
@@ -163,7 +180,7 @@ footer a{color:var(--lime)}
   .side-l,.side-r{flex:1 1 100%;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;text-align:center}
   .side-l{gap:8px;margin-top:16px;padding-bottom:0}
   .side-r{gap:12px}
-  .side-l p,.side-r .label{padding:8px 14px;font-size:clamp(11px,3.1vw,16px);letter-spacing:.04em}
+  .side-l p,.side-r .label{padding:8px 12px;font-size:clamp(11px,3.1vw,16px);letter-spacing:.02em}
   .cta--lime{width:clamp(104px,30vw,132px);height:clamp(104px,30vw,132px);font-size:clamp(18px,5vw,24px)}
   .portrait{order:3;margin-top:8px}
   .photo{width:clamp(196px,min(70vw,75vh),340px)}
