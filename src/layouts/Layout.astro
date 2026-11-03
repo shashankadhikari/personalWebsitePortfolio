@@ -1,125 +1,48 @@
 ---
-import Navbar from "../components/Navbar.astro";
+import "../styles/global.css";
 
 export interface Props {
   title: string;
+  description: string;
 }
 
-const { title } = Astro.props;
-
-import barba from "@barba/core";
-import { gsap } from "gsap";
-
-function pageTransition() {
-  var t1 = gsap.timeline();
-  t1.to("ul.transition li", {
-    duration: 0.5,
-    scaleY: 1,
-    transformOrigin: "buttom left",
-    stagger: 0.2,
-  });
-  t1.to("ul.transition li", {
-    duration: 0.5,
-    scaleY: 0,
-    transformOrigin: "buttom left",
-    stagger: 0.1,
-    delay: 0.1,
-  });
-}
-
-function contentAnimation() {
-  var t1 = gsap.timeline();
-  t1.from(".left", { duration: 1.5, translateY: 50, opacity: 0 });
-  t1.to("img", { clipPath: "polygon(0 0, 100% 0,100% 100%,0% 100%)" }, "-=1.1");
-}
-
-function delay(n: number = 2000) {
-  return new Promise<void>((done) => {
-    setTimeout(() => {
-      done();
-    }, n);
-  });
-}
-
-barba.init({
-  transitions: [
-    {
-      async leave(data) {
-        const done = this.async();
-
-        pageTransition();
-        await delay(1500);
-        done();
-      },
-      async enter(data) {
-        contentAnimation();
-      },
-      async once(data) {
-        contentAnimation();
-      },
-    },
-  ],
-});
+const { title, description } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;700&family=Montserrat:wght@400;500&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700;800&display=swap"
     />
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
+    <script is:inline>document.documentElement.classList.add("js");</script>
   </head>
-  <body class="bg-custom-bg">
-    <ul class="transition">
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
-    <Navbar />
+  <body id="top">
     <slot />
+    <script>
+      // Reveal elements as they scroll into view
+      const els = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              io.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.15 },
+      );
+      els.forEach((el) => io.observe(el));
+    </script>
   </body>
 </html>
-
-<style>
-  ul.transition {
-    display: flex;
-    position: absolute;
-    z-index: 10;
-    height: 100vh;
-    width: 100%;
-    top: 0;
-    left: 0;
-    margin: 0;
-    pointer-events: none;
-  }
-
-  ul.transition li {
-    transform: scaleY(0);
-    background: white;
-    width: 20%;
-  }
-</style>

@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import portrait from "../images/shashank-cutout.png";
+---
+
+<header class="hero">
+  <svg class="swoosh" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M57 0 H100 V100 H86 C74 78 56 66 55 44 C54 24 50 10 57 0 Z" fill="#F4EAD5"></path>
+    <path d="M0 74 C12 66 26 74 31 100 H0 Z" fill="#F4EAD5"></path>
+  </svg>
+
+  <nav class="nav" aria-label="Main">
+    <a class="logo" href="#top">SHASHANK<span>.</span></a>
+    <div class="navlinks">
+      <a href="#top">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#work">WORK</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <a class="mailbtn" href="mailto:shashank.adhikari4152@gmail.com" aria-label="Email Shashank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+    </a>
+  </nav>
+
+  <p class="hello">HI, I’M SHASHANK &amp; I AM A</p>
+  <h1 class="display"><span class="a">FRONT</span><span class="b">END</span></h1>
+
+  <div class="stage">
+    <div class="side-l label">
+      <p>DEVELOPER<br />WITH A DESIGN EYE</p>
+      <p>BASED IN<br />BUTWAL, NEPAL</p>
+    </div>
+
+    <div class="portrait">
+      <Image
+        class="photo photo--img"
+        src={portrait}
+        alt="Shashank Adhikari smiling, wearing a denim shirt"
+        widths={[320, 640, 900]}
+        sizes="(min-width: 1467px) 440px, (min-width: 867px) 30vw, 260px"
+        format="webp"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="sticker">REACT-Y WHEN<br />YOU ARE?</div>
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="0 0 100 100" width="104" height="104"><path d="M50 0 L58 18 L77 10 L74 30 L94 34 L80 50 L94 66 L74 70 L77 90 L58 82 L50 100 L42 82 L23 90 L26 70 L6 66 L20 50 L6 34 L26 30 L23 10 L42 18 Z" fill="#0B4A38"></path></svg>
+        <p>OPEN<br />TO WORK</p>
+      </div>
+    </div>
+
+    <div class="side-r">
+      <p class="label">3+ YEARS<br />SHIPPING PIXELS</p>
+      <a class="cta cta--lime" href="mailto:shashank.adhikari4152@gmail.com">LET’S WORK<br />TOGETHER ↗</a>
+    </div>
+  </div>
+</header>

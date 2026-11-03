@@ -1,0 +1,85 @@
+---
+import { Image } from "astro:assets";
+import gsAtHome from "../images/Portfolio/gsAtHome.png";
+import waymandu from "../images/Portfolio/Waymandu.png";
+import drStory from "../images/Portfolio/DrStory.png";
+import burgerHouse from "../images/Portfolio/BurgerHouse.png";
+
+// Add a `url` to a project to turn its card into a link with a "VIEW ↗" label.
+const projects: {
+  name: string;
+  kind: string;
+  text: string;
+  image: ImageMetadata;
+  alt: string;
+  url?: string;
+}[] = [
+  {
+    name: "GS AT-HOME",
+    kind: "WEB + MOBILE",
+    text: "A multi-vendor, multi-role platform for digital goods and services, with a web app and iOS and Android apps.",
+    image: gsAtHome,
+    alt: "GS At-Home web app on a tablet and mobile app on a phone",
+  },
+  {
+    name: "WAYMANDU",
+    kind: "WEB APP",
+    text: "A vehicle rental web application built with Laravel, with fast filtering across the fleet.",
+    image: waymandu,
+    alt: "Waymandu vehicle listing page with filters in a browser window",
+  },
+  {
+    name: "DR. STORY NEPAL",
+    kind: "WEBSITE",
+    text: "A responsive, dynamic medical news forum with up-to-date news, mock tests and stories from professionals.",
+    image: drStory,
+    alt: "Doctor Story Nepal website alongside its Facebook and Instagram pages",
+  },
+  {
+    name: "BURGER HOUSE",
+    kind: "MOBILE APP",
+    text: "An iOS and Android app for online food ordering, order tracking and merchant payments.",
+    image: burgerHouse,
+    alt: "Burger House food ordering app on three phones",
+  },
+];
+---
+
+<section id="work" class="work">
+  <div class="wrap stack">
+    <div class="row">
+      <h2 class="display h-xl">SELECTED<br /><span>WORK</span></h2>
+      <p class="eyebrow">(03) — 3+ YEARS OF EXPERIENCE</p>
+    </div>
+    <div class="projects">
+      {projects.map((project, i) => {
+        const Card = project.url ? "a" : "article";
+        return (
+          <Card class="project lift reveal" href={project.url}>
+            <div class={`shot s${i + 1}`}>
+              <div class="shot-frame">
+                <Image
+                  src={project.image}
+                  alt={project.alt}
+                  widths={[480, 800, 1200]}
+                  sizes="(max-width: 760px) 100vw, (max-width: 1432px) 50vw, 650px"
+                  format="webp"
+                  quality={80}
+                />
+              </div>
+              <div class="shot-foot">
+                <b>{String(i + 1).padStart(2, "0")}</b>
+                <em>{project.kind}</em>
+              </div>
+            </div>
+            <div class="project-head">
+              <h3 class="display">{project.name}</h3>
+              {project.url && <span>VIEW ↗</span>}
+            </div>
+            <p>{project.text}</p>
+          </Card>
+        );
+      })}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+---
+const socials = [
+  { label: "GITHUB", href: "https://github.com/shashankadhikari" },
+  { label: "LINKEDIN", href: "https://www.linkedin.com/in/shashank-adhikari-aa28931b5/" },
+  { label: "INSTAGRAM", href: "https://www.instagram.com/estoy_shashank/" },
+];
+---
+
+<footer>
+  <span>© {new Date().getFullYear()} SHASHANK ADHIKARI</span>
+  <span>BUTWAL, NEPAL</span>
+  <nav aria-label="Social">
+    {socials.map((social) => <a href={social.href} target="_blank" rel="noopener">{social.label}</a>)}
+  </nav>
+</footer>

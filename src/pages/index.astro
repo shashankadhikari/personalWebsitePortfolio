@@ -1,8 +1,25 @@
 ---
-import Hero from "../components/HomePage/Hero.astro";
 import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
+import About from "../components/About.astro";
+import Services from "../components/Services.astro";
+import Work from "../components/Work.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
 ---
 
-<Layout title="Home Page">
+<Layout
+  title="Shashank Adhikari — Frontend Developer"
+  description="Shashank Adhikari — a creative frontend developer from Butwal, Nepal."
+>
   <Hero />
+  <Marquee />
+  <main>
+    <About />
+    <Services />
+    <Work />
+    <Contact />
+  </main>
+  <Footer />
 </Layout>

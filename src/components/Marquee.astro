@@ -1,0 +1,9 @@
+---
+const skills = ["REACT", "NEXT.JS", "TYPESCRIPT", "TAILWIND CSS", "MOTION", "FIGMA", "ACCESSIBILITY"];
+---
+
+<div class="marquee" role="region" aria-label="Skills: React, Next.js, TypeScript, Tailwind CSS, Motion, Figma, Accessibility">
+  <div class="mq" aria-hidden="true">
+    {[...skills, ...skills].map((skill) => <span>{skill} <i>✺</i></span>)}
+  </div>
+</div>

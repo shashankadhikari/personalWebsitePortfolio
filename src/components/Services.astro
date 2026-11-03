@@ -1,0 +1,26 @@
+---
+const services = [
+  { title: "INTERFACES", text: "Pixel-perfect, responsive UIs built from your designs or from scratch." },
+  { title: "DESIGN SYSTEMS", text: "Reusable components and tokens that keep big products consistent." },
+  { title: "MOTION", text: "Micro-interactions and transitions that make a product feel alive." },
+  { title: "PERFORMANCE", text: "Fast, accessible front ends that score well and convert better." },
+];
+---
+
+<section class="services">
+  <div class="wrap stack">
+    <div class="row">
+      <h2 class="display">WHAT I DO</h2>
+      <p class="eyebrow">(02) — SERVICES</p>
+    </div>
+    <div class="svc-grid">
+      {services.map((service, i) => (
+        <div class="svc reveal">
+          <p class="eyebrow">{String(i + 1).padStart(2, "0")}</p>
+          <h3 class="display">{service.title}</h3>
+          <p>{service.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
