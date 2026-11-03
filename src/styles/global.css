@@ -36,11 +36,12 @@ p,h1,h2,h3{margin:0}
 .hello{position:relative;margin-top:clamp(8px,2vw,24px);width:fit-content;margin-inline:auto;margin-bottom:clamp(10px,1.4vw,20px);padding:6px 16px;border-radius:999px;background:var(--green);text-align:center;font-weight:800;font-size:clamp(13px,1.4vw,19px);letter-spacing:.14em;color:var(--cream)}
 .hero h1{position:relative;text-align:center;font-size:clamp(84px,19.5vw,300px);line-height:.86;letter-spacing:-.005em;white-space:nowrap}
 .hero h1 .a{color:var(--lime)} .hero h1 .b{color:var(--green)}
+.nav,.stage{max-width:1500px;margin-inline:auto}
 .stage{position:relative;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;gap:clamp(24px,3vw,48px)}
 .side-l{flex:1 1 220px;display:flex;flex-direction:column;gap:clamp(24px,4vw,64px);padding-bottom:24px;color:var(--green)}
 .side-r{flex:1 1 220px;display:flex;flex-direction:column;align-items:flex-end;gap:clamp(24px,3vw,40px);text-align:right}
 /* the swoosh runs behind these labels, so they carry their own background */
-.side-l p,.side-r .label{width:fit-content;padding:10px 18px;border-radius:18px;background:var(--green);color:var(--cream)}
+.side-l p,.side-r .label{width:fit-content;padding:10px 18px;border-radius:18px;background:var(--green);color:var(--cream);font-size:clamp(14px,1.35vw,19px)}
 .portrait{position:relative;flex:0 0 auto;margin-top:clamp(-110px,-5.5vw,-28px);margin-bottom:calc(-1 * clamp(48px,6vw,88px))}
 .photo{width:clamp(260px,30vw,440px);aspect-ratio:3/4;border-radius:999px 999px 28px 28px;border:3px dashed #fff;background:rgba(255,255,255,.10);display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff;font-weight:800;font-size:16px;letter-spacing:.1em;overflow:hidden}
 .photo--img{height:auto;border:0;background:none;padding:0;object-fit:contain;object-position:bottom}
@@ -81,7 +82,7 @@ section{padding:clamp(72px,9vw,140px) var(--gutter)}
 .services{background:var(--lime);padding-block:clamp(64px,8vw,120px)}
 .services .stack{gap:48px}
 .services h2{font-size:clamp(52px,7vw,104px);line-height:.9}
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));border-top:3px solid var(--green)}
+.svc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:3px solid var(--green)}
 .svc{padding:28px 24px 32px 0;border-bottom:3px solid var(--green);display:flex;flex-direction:column;gap:14px}
 .svc h3{font-size:34px;line-height:1}
 .svc p:last-child{font-size:17px;line-height:1.5}
@@ -112,7 +113,7 @@ section{padding:clamp(72px,9vw,140px) var(--gutter)}
 .email{font-weight:800;font-size:clamp(14px,4.4vw,30px);color:#fff;text-underline-offset:6px}
 
 footer{background:var(--green);padding:24px var(--gutter);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-weight:700;font-size:14px;letter-spacing:.1em;color:var(--cream)}
-footer nav{display:flex;gap:20px}
+footer nav{display:flex;flex-wrap:wrap;gap:0 20px}
 footer a{color:var(--lime)}
 
 /* ---------- Reveal on scroll ---------- */
@@ -139,17 +140,59 @@ footer a{color:var(--lime)}
 @media (max-width:760px){
   .projects{grid-template-columns:minmax(0,1fr)}
 }
+@media (max-width:1200px) and (min-width:900px){
+  /* the about text and tiles share a row here, so the tiles get narrow */
+  .tile{padding:20px 14px}
+  .tile small{font-size:12px;letter-spacing:.06em}
+}
+@media (max-width:1099px){
+  .svc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:1023px){
+  /* comfortable tap targets on touch screens */
+  .navlinks a{padding-block:14px}
+  .email,footer a{display:inline-block;padding-block:14px}
+  .badge{right:-24px}
+  .side-l p,.side-r .label{padding:10px 14px;letter-spacing:.03em}
+}
+@media (max-width:819px){
+  /* hero stacks: labels, then label + button, then the portrait on the marquee */
+  .hero h1{font-size:22vw}
+  .h-xl{font-size:min(20vw,120px)}
+  .stage{gap:12px}
+  .side-l,.side-r{flex:1 1 100%;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;text-align:center}
+  .side-l{gap:8px;margin-top:16px;padding-bottom:0}
+  .side-r{gap:12px}
+  .side-l p,.side-r .label{padding:8px 14px;font-size:clamp(11px,3.1vw,16px);letter-spacing:.04em}
+  .cta--lime{width:clamp(104px,30vw,132px);height:clamp(104px,30vw,132px);font-size:clamp(18px,5vw,24px)}
+  .portrait{order:3;margin-top:8px}
+  .photo{width:clamp(196px,min(70vw,75vh),340px)}
+  .badge{right:-8px}
+}
 @media (max-width:640px){
   .mailbtn{order:2}
-  .navlinks{order:3;width:100%;flex-wrap:nowrap;justify-content:space-between;font-size:12px;letter-spacing:.04em}
-  .navlinks a{padding:10px}
-  .hero h1{font-size:22.5vw}
-  .side-l,.side-r{flex-basis:100%;align-items:center;text-align:center}
-  .side-l{gap:12px;margin-top:16px;padding-bottom:0;font-size:16px}
-  .side-r .label{font-size:16px}
-  .portrait{order:3;margin-top:0}
-  .badge{right:-12px}
-  .tiles{grid-template-columns:1fr}
+  .navlinks{order:3;width:100%;flex-wrap:nowrap;justify-content:space-between;font-size:clamp(10px,3.4vw,12px);letter-spacing:.02em}
+  .navlinks a{padding-inline:clamp(4px,1.8vw,10px)}
+  .email{font-size:clamp(12px,4.4vw,30px);overflow-wrap:anywhere}
+  .svc-grid{grid-template-columns:minmax(0,1fr)}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile{min-height:150px;padding:20px 16px}
+  .tile small{font-size:12px;letter-spacing:.06em}
+  .t3{grid-column:1/-1}
+}
+@media (max-width:340px){
+  .tiles{grid-template-columns:minmax(0,1fr)}
+  .tile{min-height:120px}
+  .hello{font-size:11px;letter-spacing:.08em;padding-inline:12px}
+  .badge{top:8%;right:-4px;width:80px;height:80px}
+  .badge svg{width:100%;height:100%}
+  .badge p{font-size:10px}
+  .sticker{font-size:17px;padding:10px 16px}
+}
+@media (hover:none){
+  /* a tap shouldn't leave cards stuck in their hover state */
+  .lift:hover,.cta:hover,.mailbtn:hover,.project:hover .shot img{transform:none}
+  .navlinks a:hover{background:none}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
