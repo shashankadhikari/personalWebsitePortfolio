@@ -4,6 +4,7 @@ import gsAtHome from "../images/Portfolio/gsAtHome.png";
 import waymandu from "../images/Portfolio/Waymandu.png";
 import drStory from "../images/Portfolio/DrStory.png";
 import burgerHouse from "../images/Portfolio/BurgerHouse.png";
+import { yearsOfExperience } from "../data/site";
 
 // Add a `url` to a project to turn its card into a link with a "VIEW ↗" label.
 const projects: {
@@ -17,28 +18,28 @@ const projects: {
   {
     name: "GS AT-HOME",
     kind: "WEB + MOBILE",
-    text: "A multi-vendor, multi-role platform for digital goods and services, with a web app and iOS and Android apps.",
+    text: "One platform for digital goods and services. Multi-vendor web app, plus iOS and Android.",
     image: gsAtHome,
     alt: "GS At-Home web app on a tablet and mobile app on a phone",
   },
   {
     name: "WAYMANDU",
     kind: "WEB APP",
-    text: "A vehicle rental web application built with Laravel, with fast filtering across the fleet.",
+    text: "Vehicle rentals with fast, deep filtering across the fleet. Built on Laravel.",
     image: waymandu,
     alt: "Waymandu vehicle listing page with filters in a browser window",
   },
   {
     name: "DR. STORY NEPAL",
     kind: "WEBSITE",
-    text: "A responsive, dynamic medical news forum with up-to-date news, mock tests and stories from professionals.",
+    text: "Medical news, mock tests and stories from professionals, all in one responsive site.",
     image: drStory,
     alt: "Doctor Story Nepal website alongside its Facebook and Instagram pages",
   },
   {
     name: "BURGER HOUSE",
     kind: "MOBILE APP",
-    text: "An iOS and Android app for online food ordering, order tracking and merchant payments.",
+    text: "Order, track and pay from your phone. Built for iOS and Android.",
     image: burgerHouse,
     alt: "Burger House food ordering app on three phones",
   },
@@ -49,7 +50,7 @@ const projects: {
   <div class="wrap stack">
     <div class="row">
       <h2 class="display h-xl">SELECTED<br /><span>WORK</span></h2>
-      <p class="eyebrow">(03) — 3+ YEARS OF EXPERIENCE</p>
+      <p class="eyebrow">(03) — {yearsOfExperience}+ YEARS OF EXPERIENCE</p>
     </div>
     <div class="projects">
       {projects.map((project, i) => {
