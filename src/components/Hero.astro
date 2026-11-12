@@ -43,6 +43,9 @@ import { yearsOfExperience } from "../data/site";
         loading="eager"
         fetchpriority="high"
       />
+      <!-- the clip is shot on the hero orange; the canvas keys that orange out so the swoosh shows through, like the cutout -->
+      <canvas class="photo-live" aria-hidden="true"></canvas>
+      <video class="photo-src" src="/hero-loop.mp4" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       <div class="sticker">READY TO SHIP<br />WHEN YOU ARE</div>
       <div class="badge" aria-hidden="true">
         <svg viewBox="0 0 100 100" width="104" height="104"><path d="M50 0 L58 18 L77 10 L74 30 L94 34 L80 50 L94 66 L74 70 L77 90 L58 82 L50 100 L42 82 L23 90 L26 70 L6 66 L20 50 L6 34 L26 30 L23 10 L42 18 Z" fill="#0B4A38"></path></svg>
@@ -56,3 +59,107 @@ import { yearsOfExperience } from "../data/site";
     </div>
   </div>
 </header>
+
+<script>
+  // Plays the hero loop with its orange background keyed out. The still cutout stays underneath
+  // and is what everyone sees with reduced motion, without WebGL, or before the clip is ready.
+  const portrait = document.querySelector<HTMLElement>(".portrait");
+  const canvas = portrait?.querySelector<HTMLCanvasElement>(".photo-live");
+  const video = portrait?.querySelector<HTMLVideoElement>(".photo-src");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const gl = !reduce && canvas ? canvas.getContext("webgl", { premultipliedAlpha: true, alpha: true }) : null;
+
+  if (portrait && canvas && video && gl) {
+    const vs = `attribute vec2 p;varying vec2 uv;void main(){uv=vec2(p.x*.5+.5,.5-p.y*.5);gl_Position=vec4(p,0.,1.);}`;
+    // Chroma key tuned on the actual clip. The key colour is read from the clip's own top corners, so it
+    // matches however this browser decodes the video. Only pixels within a few px of true background get
+    // the soft key; inside the silhouette (sunlit skin is close to the orange) stays fully opaque. Edges
+    // are eroded 1px, un-mixed from the orange, and despilled so no orange rim shows on the cream swoosh.
+    const fs = `precision mediump float;varying vec2 uv;uniform sampler2D t;uniform vec2 px;
+      vec3 K;vec3 Kc;
+      vec3 ycc(vec3 c){return vec3(dot(c,vec3(.299,.587,.114)),dot(c,vec3(-.1687,-.3313,.5)),dot(c,vec3(.5,-.4187,-.0813)));}
+      float dist(vec2 o){vec3 d=ycc(texture2D(t,uv+o*px).rgb)-Kc;d.x*=.5;return length(d);}
+      float soft(vec2 o){return smoothstep(.02,.13,dist(o));}
+      void main(){
+        K=(texture2D(t,6.*px).rgb+texture2D(t,vec2(1.-6.*px.x,6.*px.y)).rgb)*.5;Kc=ycc(K);
+        float d0=dist(vec2(0.));
+        bool near=d0<.02;bool edge=near;
+        for(int i=0;i<12;i++){float a=float(i)*.5236;if(dist(6.*vec2(cos(a),sin(a)))<.02)near=true;}
+        for(int i=0;i<8;i++){float a=float(i)*.7854;vec2 o=vec2(cos(a),sin(a));if(dist(3.*o)<.02)near=true;if(dist(2.*o)<.02){near=true;edge=true;}}
+        float al=1.;
+        if(near){al=min(soft(vec2(0.)),min(min(soft(vec2(1.,0.)),soft(vec2(-1.,0.))),min(soft(vec2(0.,1.)),soft(vec2(0.,-1.)))));}
+        vec3 c=texture2D(t,uv).rgb;
+        vec3 f=clamp((c-K*(1.-al))/max(al,.001),0.,1.);
+        if(edge){vec3 y=ycc(f);vec2 k=normalize(Kc.yz);y.yz-=k*max(dot(y.yz,k),0.)*.6;
+          f=clamp(vec3(y.x+1.402*y.z,y.x-.344136*y.y-.714136*y.z,y.x+1.772*y.y),0.,1.);}
+        gl_FragColor=vec4(f*al,al);}`;
+    const sh = (type: number, src: string) => {
+      const s = gl.createShader(type)!;
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
+    };
+    const prog = gl.createProgram()!;
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(prog);
+
+    if (gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      gl.useProgram(prog);
+      gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, "p");
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+      for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) {
+        gl.texParameteri(gl.TEXTURE_2D, k, v);
+      }
+
+      const pxLoc = gl.getUniformLocation(prog, "px");
+      const render = () => {
+        if (video.readyState < 2) return;
+        if (canvas.width !== video.videoWidth) {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          gl.uniform2f(pxLoc, 1 / canvas.width, 1 / canvas.height);
+        }
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        portrait.classList.add("is-live");
+      };
+
+      // redraw only when the video has a new frame (24fps), falling back to animation frames
+      const hasRVFC = "requestVideoFrameCallback" in video;
+      let handle = 0;
+      let running = false;
+      const tick = () => {
+        if (!running) return;
+        render();
+        handle = hasRVFC ? video.requestVideoFrameCallback(tick) : requestAnimationFrame(tick);
+      };
+      const start = () => {
+        if (running) return;
+        running = true;
+        tick();
+      };
+      const stop = () => {
+        running = false;
+        if (hasRVFC) video.cancelVideoFrameCallback(handle);
+        else cancelAnimationFrame(handle);
+      };
+
+      // only decode and draw while the hero is on screen
+      new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) {
+          video.preload = "auto";
+          video.play().then(start).catch(() => {});
+        } else {
+          video.pause();
+          stop();
+        }
+      }).observe(portrait);
+    }
+  }
+</script>
